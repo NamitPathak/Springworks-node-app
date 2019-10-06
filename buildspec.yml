@@ -8,13 +8,11 @@ phases:
   pre_build:
     commands:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-      - REPOSITORY_URI=665934528137.dkr.ecr.us-east-1.amazonaws.com/springworksproject
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
-      - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker build -t springworksproject .
+      - docker tag springworksproject:latest 665934528137.dkr.ecr.us-east-1.amazonaws.com/springworksproject:latest
   post_build:
     commands:
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push 665934528137.dkr.ecr.us-east-1.amazonaws.com/springworksproject:latest
+      

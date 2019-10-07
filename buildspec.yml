@@ -1,6 +1,4 @@
 version: 0.2
-
-
 phases:
   install:
     runtime-versions:
@@ -10,9 +8,12 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
-      - docker build -t springworksproject .
+      - docker build -t springworksproject:latest .
       - docker tag springworksproject:latest 665934528137.dkr.ecr.us-east-1.amazonaws.com/springworksproject:latest
   post_build:
     commands:
       - docker push 665934528137.dkr.ecr.us-east-1.amazonaws.com/springworksproject:latest
+      - printf '[{"name":"springworksproject","imageUri":"%s"}]' springworksproject:latest 665934528137.dkr.ecr.us-east-1.amazonaws.com/springworksproject:latest > imagedefinitions.json
+artifacts:
+    files: imagedefinitions.json
       

@@ -15,4 +15,5 @@ phases:
   post_build:
     commands:
       - docker push 665934528137.dkr.ecr.us-east-1.amazonaws.com/springworksproject:latest
-      
+artifacts:
+  files: imagedefinitions.json
